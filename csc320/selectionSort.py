@@ -12,6 +12,8 @@ def selectionSort(A):
             temp = A[i]
             A[i] = minVal
             A[minLoc] = temp
+    return A
         
 
-s = selectionSort([4, 2, 1, 5,3,9,8])
+s = selectionSort([4, 2, 1, 5,3,9,8,12,21,32,45,16,91,87])
+print(s)
