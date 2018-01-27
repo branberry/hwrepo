@@ -33,7 +33,8 @@ public class InsertionSort {
 
     public static void main(String[] args) {
         /*
-            Initializing test arrays of varying sizes to sort with insertion sort up to n = 100000
+            Initializing test arrays of varying sizes to sort with insertion sort from n = 10 up to n = 100000
+            The array average holds the values the number of operations on average each array from n = 10 to n = 100000
         */ 
         int[][] Arrays = new int[5][];
         float[] avg = new float[5];
@@ -42,9 +43,15 @@ public class InsertionSort {
         for(int i = 0; i < Arrays.length; i++) {
             j *= 10;
             Arrays[i] = new int[j];
-            Arrays[i] = createRandomIntArray(j);
-            avg[i] += sort(Arrays[i]);
-            System.out.println(j);
+
+            /*
+                call insertion sort 10 times on each array of size n. 
+                Creates a new random array for each iteration.
+            */
+            for(int k = 0; k < 10; k++){
+                Arrays[i] = createRandomIntArray(j);
+                avg[i] += sort(Arrays[i]);
+            }
         }
 
         for(int i = 0; i < avg.length; i++) {
