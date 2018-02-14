@@ -50,11 +50,19 @@ public class HeapSort {
      * @param i is the first index
      * @param j is the second index
      */
-    public static void swap(int[] A, int i, int j) {
+    public static int swap(int[] A, int i, int j) {
         int temp;
+        int count = 0;
+
         temp = A[i];
+        count++;
         A[i] = A[j];
+        count++;
         A[j] = temp;
+        count++;
+
+        return count;
+        
     }
 
     /**
@@ -63,25 +71,33 @@ public class HeapSort {
      * @param A the array containing the heap
      * @param i the index of the heap that we are max-heapifying
      */
-    public static void maxHeapify(int[] A, int i) {
+    public static int maxHeapify(int[] A, int i) {
+        int count = 0;
+
         int l = left(i);
+        count++;
         int r = right(i);
+        count++;
         int largest;
 
         if(l < A.length && A[l] > A[i]) {
             largest = l;
+            count++;
         } else {
             largest = i;
+            count++;
         }
 
         if(r < A.length && A[r] > A[largest]) {
             largest = r;
+            count++;
         }
 
         if(largest != i) {
             swap(A,i,largest);
-            maxHeapify(A,largest);
+            count += maxHeapify(A,largest);
         }
+        return count;
     }
     /**
      * swims value at index i to the correct position if it is not already.  If not, it swaps the index of either the left or right child that contains a value larger than A[i]
@@ -91,53 +107,70 @@ public class HeapSort {
      * @param i the index of the heap we are max-heapifying
      * @param n the index of the heap that we want to heapify up to
      */
-    public static void maxHeapify(int[] A, int i, int n) {
+    public static int maxHeapify(int[] A, int i, int n) {
+        int count = 0;
+
         int l = left(i);
+        count++;
         int r = right(i);
+        count++;
         int largest;
 
         if(l <= n && A[l] > A[i]) {
             largest = l;
+            count++;
         } else {
             largest = i;
+            count++;
         }
 
         if(r <= n && A[r] > A[largest]) {
             largest = r;
+            count++;
         }
 
         if(largest != i) {
-            swap(A,i,largest);
-            maxHeapify(A,largest,n);
+            count += swap(A,i,largest);
+            count += maxHeapify(A,largest,n);
         }
+
+        return count;
     }
     /**
      * builds a max heap by calling maxHeapify on the heap n/2 times as it would be unnecessary to call maxHeapify on leaf nodes.
      * @param A the array we are turning into a max heap
      */
-    public static void buildMaxHeap(int[] A) {
+    public static int buildMaxHeap(int[] A) {
+        int count = 0;
         for(int i = (int) Math.floor(A.length/2); i >= 1; i--) {
-            maxHeapify(A,i);
+            count += maxHeapify(A,i);
         }
+        return count;
     }
     /**
-     * 
+     * The heapsort function
+     * @param A the array we are sorting 
+     * @return the count of operations for heapsort
      */
-    public static void sort(int[] A) {
-        buildMaxHeap(A);
-        int n = A.length - 1;
-        for(int i = n; i >= 1; i--) {
-            n--;
-            swap(A,1,i);
-            maxHeapify(A,1,n);
+    public static int sort(int[] A) {
+        int count = 0;
+
+        count += buildMaxHeap(A);
+
+        for(int i = A.length - 1; i >= 1; i--) {
+            count += swap(A,1,i);
+            count += maxHeapify(A,1,i-1);
         }
+
+        return count;
     }
 
     public static void main(String[] args) {
         int[] test = new int[11];
+        int count = 0;
         test = createRandomIntArray(10);
-        sort(test);
-
+        count = sort(test);
+        System.out.println("count: " + count);
         for(int i = 1; i < 11; i++) {
             System.out.print(" " + test[i] + " ");
         }
