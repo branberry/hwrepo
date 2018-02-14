@@ -2,6 +2,7 @@ import java.util.Random;
 
 /**
  * Created by Brandon Ly on 1/18/2018.
+ * CSC 320A
  */
 public class InsertionSort {
     public static int[] createRandomIntArray( int size) {
@@ -39,6 +40,10 @@ public class InsertionSort {
         int[][] Arrays = new int[5][];
         float[] avg = new float[5];
 
+        /* 
+            Fills the arrays with varying sizes of n.
+            the variable, j, holds the values for the different sizes of n ranging from 10 to 100000
+        */
         int j = 1;
         for(int i = 0; i < Arrays.length; i++) {
             j *= 10;
@@ -53,9 +58,13 @@ public class InsertionSort {
                 avg[i] += sort(Arrays[i]);
             }
         }
-
+        /* 
+            this loop divides the average number of operations by 10 because each 
+            array is sorted 10 times and each time it is sorted, the function returns the number of operations it took.
+            The results are then displayed in the print statement
+        */
         for(int i = 0; i < avg.length; i++) {
-            avg[i] = avg[i]/10;
+            avg[i] = avg[i] / 10;
             System.out.println("Size of the array: " + Arrays[i].length + " Estimated number of operations: " + avg[i]);
         }
     }
