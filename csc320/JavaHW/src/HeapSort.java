@@ -14,8 +14,8 @@ public class HeapSort {
     public static int[] createRandomIntArray(int size) {
         int[] answer = new int[size+1];
         Random generator = new Random();
-        answer[0] = 0;
-        for( int i = 1; i < size; i++) {
+        answer[0] = -9999999;
+        for( int i = 1; i < size + 1; i++) {
             answer[i] = generator.nextInt(100) + 1;
         }
         return answer;
@@ -67,6 +67,27 @@ public class HeapSort {
         }
     }
 
+    public static void maxHeapify(int[] A, int i, int n) {
+        int l = left(i);
+        int r = right(i);
+        int largest;
+
+        if(l <= n && A[l] > A[i]) {
+            largest = l;
+        } else {
+            largest = i;
+        }
+
+        if(r <= n && A[r] > A[largest]) {
+            largest = r;
+        }
+
+        if(largest != i) {
+            swap(A,i,largest);
+            maxHeapify(A,largest,n);
+        }
+    }
+
     public static void buildMaxHeap(int[] A) {
         for(int i = (int) Math.floor(A.length/2); i >= 1; i--) {
             maxHeapify(A,i);
@@ -76,9 +97,10 @@ public class HeapSort {
     public static void sort(int[] A) {
         buildMaxHeap(A);
         int n = A.length - 1;
-        for(int i = n; i >= 2; i--) {
+        for(int i = n; i >= 1; i--) {
+            n--;
             swap(A,1,i);
-            maxHeapify(A,1);
+            maxHeapify(A,1,n);
         }
     }
 
@@ -88,7 +110,7 @@ public class HeapSort {
         sort(test);
 
         for(int i = 1; i < 11; i++) {
-            System.out.println(test[i]);
+            System.out.print(" " + test[i] + " ");
         }
     }
 }
