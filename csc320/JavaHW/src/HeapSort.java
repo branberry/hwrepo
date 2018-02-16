@@ -6,11 +6,17 @@ import java.util.Random;
  * 
  *  This class is an implementation of Heap Sort from CLRS
  *  This implementation will sort arrays of integers
+ * 
+ *  HeapSort sorts an array by first calling buildMaxHeap and then swaps the max 
+ *  to the end of the array.  Then maxHeapify is called on the subarray from 1 to n-1 until 
+ *  every elemented is swapped to its proper position.
  */
 public class HeapSort {
     /**
-     * @param size is the size of the random array
      * fills the array with random numbers 
+     * 
+     * @param size is the size of the random array
+     * @return returns an array filled with random values
      */
     public static int[] createRandomIntArray(int size) {
         int[] answer = new int[size + 1];
@@ -49,6 +55,7 @@ public class HeapSort {
      * @param A is the array that will have its value swapped
      * @param i is the first index
      * @param j is the second index
+     * @return the count of the operations that were required to complete the method
      */
     public static int swap(int[] A, int i, int j) {
         int temp;
@@ -70,6 +77,7 @@ public class HeapSort {
      * the function then recursively calls itself to make sure the rest of the heap is max-heapified.
      * @param A the array containing the heap
      * @param i the index of the heap that we are max-heapifying
+     * @return the count of operations were required to complete the method
      */
     public static int maxHeapify(int[] A, int i) {
         int count = 0;
@@ -99,13 +107,15 @@ public class HeapSort {
         }
         return count;
     }
+
     /**
      * swims value at index i to the correct position if it is not already.  If not, it swaps the index of either the left or right child that contains a value larger than A[i]
      * the function then recursively calls itself to make sure the rest of the heap is max-heapified. The additional argument allows for only a sub-portion of the heap to be used in the HeapSort method
-     * Since heapsort puts the larget value at the end of the array, we do not want to use reheapify the array with the largest value, rather, the subbarray from A[1] to n-1.
+     * Since heapsort puts the larget value at the end of the array, we do not want to use reheapify the array with the largest value, rather, the subbarray from A[1] to n-1 and so forth.
      * @param A the arry containing the heap
      * @param i the index of the heap we are max-heapifying
      * @param n the index of the heap that we want to heapify up to
+     * @return returns the count of operations that were required to complete the method
      */
     public static int maxHeapify(int[] A, int i, int n) {
         int count = 0;
@@ -139,6 +149,7 @@ public class HeapSort {
     /**
      * builds a max heap by calling maxHeapify on the heap n/2 times as it would be unnecessary to call maxHeapify on leaf nodes.
      * @param A the array we are turning into a max heap
+     * @return returns the count of operations that are required to complete the method
      */
     public static int buildMaxHeap(int[] A) {
         int count = 0;
@@ -166,13 +177,39 @@ public class HeapSort {
     }
 
     public static void main(String[] args) {
-        int[] test = new int[11];
-        int count = 0;
-        test = createRandomIntArray(10);
-        count = sort(test);
-        System.out.println("count: " + count);
-        for(int i = 1; i < 11; i++) {
-            System.out.print(" " + test[i] + " ");
+        /*
+            Initializing test arrays of varying sizes to sort with insertion sort from n = 10 up to n = 100000
+            The array average holds the values the number of operations on average each array from n = 10 to n = 100000
+        */ 
+        int[][] Arrays = new int[5][];
+        float[] avg = new float[5];
+
+        /* 
+            Fills the arrays with varying sizes of n.
+            the variable, j, holds the values for the different sizes of n ranging from 10 to 100000
+        */
+        int j = 1;
+        for(int i = 0; i < Arrays.length; i++) {
+            j *= 10;
+            Arrays[i] = new int[j];
+
+            /*
+                call insertion sort 10 times on each array of size n. 
+                Creates a new random array for each iteration.
+            */
+            for(int k = 0; k < 10; k++){
+                Arrays[i] = createRandomIntArray(j);
+                avg[i] += sort(Arrays[i]);
+            }
+        }
+        /* 
+            this loop divides the average number of operations by 10 because each 
+            array is sorted 10 times and each time it is sorted, the function returns the number of operations it took.
+            The results are then displayed in the print statement
+        */
+        for(int i = 0; i < avg.length; i++) {
+            avg[i] = avg[i] / 10;
+            System.out.println("Size of the array: " + (Arrays[i].length-1) + " Estimated number of operations: " + avg[i]);
         }
     }
 }
