@@ -2,7 +2,8 @@ import java.lang.*;
 import java.util.Random;
 
 /**
- *  @author Brandon Ly - CSC 320A
+ *  @author Brandon Ly 
+ *  CSC 320A
  * 
  *  This class is an implementation of Heap Sort from CLRS
  *  This implementation will sort arrays of integers
@@ -10,6 +11,17 @@ import java.util.Random;
  *  HeapSort sorts an array by first calling buildMaxHeap and then swaps the max 
  *  to the end of the array.  Then maxHeapify is called on the subarray from 1 to n-1 until 
  *  every elemented is swapped to its proper position.
+ * 
+ *  The methods in the class are:
+ *  - int[] createRandomIntArray(int size)
+ *  - int parent(int i)
+ *  - int left(int i)
+ *  - int right(int i)
+ *  - int swap(int[] A, int i, int j)
+ *  - int maxHeapify(int[] A, int i)
+ *  - int maxHeapify(int[] A, int i, int n)
+ *  - int buildMaxHeap(int[] A)
+ *  - int sort(int[] A)
  */
 public class HeapSort {
     /**
@@ -207,6 +219,7 @@ public class HeapSort {
             array is sorted 10 times and each time it is sorted, the function returns the number of operations it took.
             The results are then displayed in the print statement
         */
+        System.out.println(Arrays[0].toString());
         for(int i = 0; i < avg.length; i++) {
             avg[i] = avg[i] / 10;
             System.out.println("Size of the array: " + (Arrays[i].length-1) + " Estimated number of operations: " + avg[i]);

@@ -47,7 +47,7 @@ public class InsertionSort {
         int j = 1;
         for(int i = 0; i < Arrays.length; i++) {
             j *= 10;
-            Arrays[i] = new int[j];
+            Arrays[i] = new int[j+1];
 
             /*
                 call insertion sort 10 times on each array of size n. 
@@ -63,6 +63,7 @@ public class InsertionSort {
             array is sorted 10 times and each time it is sorted, the function returns the number of operations it took.
             The results are then displayed in the print statement
         */
+        System.out.println(Arrays.toString(Arrays[1]));
         for(int i = 0; i < avg.length; i++) {
             avg[i] = avg[i] / 10;
             System.out.println("Size of the array: " + Arrays[i].length + " Estimated number of operations: " + avg[i]);
