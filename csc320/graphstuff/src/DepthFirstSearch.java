@@ -199,5 +199,22 @@ public class DepthFirstSearch {
          */
         System.out.println(d.toString());
         System.out.println(d.counter);
+
+
+        //////////////////////////////////////////
+        //            Experiment Code           //
+        //////////////////////////////////////////
+
+
+        /** Contains the graphs ranging in size from 100 to 1000 vertices*/
+        Graph[] graphs = new Graph[10];
+        int multiplier = 100;
+
+        for(int i = 0; i < graphs.length; i++) {
+           graphs[i] = new Graph(multiplier,0.6);
+            System.out.println(multiplier);
+            multiplier += 100;
+
+        }
     }
 }
