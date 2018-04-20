@@ -2,6 +2,11 @@ public class DFS {
     public int time;
     public Vertex[] vertices;
 
+
+    public enum Color {
+        WHITE, GREY, BLACK
+    }
+
     public DFS(int vs) {
         this.time = 0;
         this.vertices = new Vertex[vs];
@@ -22,9 +27,6 @@ public class DFS {
         }
     }
 
-    public enum Color {
-        WHITE, GREY, BLACK
-    }
     public void DepthFirstSearch(Graph G) {
         for(int i = 0; i < G.numberOfVertices(); i++) {
             this.vertices[i] = new Vertex(i, null, Color.WHITE);
@@ -42,11 +44,13 @@ public class DFS {
         u.d = time;
         u.color = Color.GREY;
         for(int i = 0; i < G.getAdjacenciesOfVertex(u.vertexNum).size(); i++) {
+            Vertex v = this.vertices[G.getAdjacenciesOfVertex(u.vertexNum).get(i)];
         }
     }
 
     public static void main(String[] args) {
         Graph g = new Graph(4, 0.6);
+        DFS d = new DFS(g.numberOfVertices());
         System.out.println("The graph is");
         System.out.println( g.toString());
         System.out.println("It had " + g.numberOfVertices() + " vertices and "
