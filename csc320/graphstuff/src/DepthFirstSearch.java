@@ -6,7 +6,7 @@
  * CSC 320A
  */
 
-public class DFS {
+public class DepthFirstSearch {
     //////////////////////////////////////
     // Instance Variables for DFS class //
     //////////////////////////////////////
@@ -72,16 +72,16 @@ public class DFS {
 
     /**
      * creates a DFS object.
-     * 
+     *
      * @param numVertices
      */
-    public DFS(int numVertices) {
+    public DepthFirstSearch(int numVertices) {
         this.time = 0;
         this.vertices = new Vertex[numVertices];
     }
 
 
-    public void DepthFirstSearch(Graph G) {
+    public void DFS(Graph G) {
         for(int i = 0; i < G.numberOfVertices(); i++) {
             this.vertices[i] = new Vertex(i, null, Color.WHITE);
         }
@@ -131,8 +131,8 @@ public class DFS {
         g.addEdge(4,3);
         g.addEdge(4,5);
         g.addEdge(5,5);
-        DFS d = new DFS(g.numberOfVertices());
-        d.DepthFirstSearch(g);
+        DepthFirstSearch d = new DepthFirstSearch(g.numberOfVertices());
+        d.DFS(g);
         System.out.println("The graph is");
         System.out.println( g.toString());
         System.out.println("It had " + g.numberOfVertices() + " vertices and "
