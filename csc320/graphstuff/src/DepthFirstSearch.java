@@ -1,12 +1,13 @@
 /**
  * The implementation of Depth First Search.
- * The depth first search takes into the constuctor the number of vertices in the graph and an array is then initalized to hold the vertex objects.
+ * The depth first search takes into the constructor the number of vertices in the graph and an array is then initialized to hold the vertex objects.
  * The start time is initialized to zero as well in the constructor.
  * @author Brandon Ly
  * CSC 320A
  */
 
 public class DepthFirstSearch {
+
     //////////////////////////////////////
     // Instance Variables for DFS class //
     //////////////////////////////////////
@@ -14,22 +15,28 @@ public class DepthFirstSearch {
     /** The time during the depth first search*/
     public int time;
 
-    /** the array of Vertex objects within the graph */
+    /** The array of Vertex objects within the graph */
     public Vertex[] vertices;
 
+    /** The counter is to keep track of operations done by DFS; is called 16 times in DFS */
+    public int counter;
 
     //////////////////////////////////////////
-    //          Enumerations                //
+    //              Enumerations            //
     //////////////////////////////////////////
 
     /**
      * Enumerations are used to represent the vertex's colors
      * Each vertex can only have white, grey, or black for the color
      */
-
     public enum Color {
         WHITE, GREY, BLACK
     }
+
+    //////////////////////////////////////////
+    //               Vertex Class           //
+    //////////////////////////////////////////
+
     /**
      * The representation of the Vertex.
      * The variable names are the exact same as the representation in the book.
@@ -69,45 +76,89 @@ public class DepthFirstSearch {
         }
     }
 
+    //////////////////////////////////////////
+    //       Depth First Search Methods     //
+    //////////////////////////////////////////
 
     /**
-     * creates a DFS object.
-     *
-     * @param numVertices
+     * creates a DFS object, initializes the vertices array.
+     * @param numVertices is the number of vertices in the graph we are passing in
      */
     public DepthFirstSearch(int numVertices) {
-        this.time = 0;
+        /** Initializing Vertex array */
+        counter++;
         this.vertices = new Vertex[numVertices];
     }
 
-
+    /**
+     * The depth first search method
+     * @param G is the graph we are performing on the dfs on
+     */
     public void DFS(Graph G) {
         for(int i = 0; i < G.numberOfVertices(); i++) {
+            /**  This counter is incremented 3 times because it assigns 3 different values to the vertex */
+            counter += 3;
             this.vertices[i] = new Vertex(i, null, Color.WHITE);
+
         }
+
+        counter++;
         this.time = 0;
+
         for(int i = 0; i < G.numberOfVertices(); i++) {
             if (this.vertices[i].color == Color.WHITE) {
+                counter++;
                 DFSVisit(G,this.vertices[i]);
             }
         }
     }
 
+    /**
+     * The DFSVisit method explores each vertex in a given vertex's adjacency matrix
+     * @param G The graph we are applying DFSVisit to
+     * @param u The vertex we are exploring
+     */
     public void DFSVisit(Graph G, Vertex u) {
+
+        counter++;
         this.time++;
+
+        counter++;
         u.startTime = this.time;
+
+        counter++;
         u.color = Color.GREY;
+
         for(int i = 0; i < G.getAdjacenciesOfVertex(u.vertexNum).size(); i++) {
+            /**
+             * This line below retrieves the linked list of vertex u, then finds its first adjacency
+             *  After that, we use the get method for the LinkedList to find the vertex's number
+             *  We then cast this to an int (as it is an Integer in the LinkedList), and then
+             *  look for that Vertex object in our vertices array.
+             */
+            counter++;
             Vertex v = this.vertices[(int) G.getAdjacenciesOfVertex(u.vertexNum).get(i)];
+            counter++;
             if(v.color == Color.WHITE) {
+                counter++;
                 v.pi = u;
+                counter++;
                 DFSVisit(G,v);
             }
         }
+        counter++;
         u.color = Color.BLACK;
+        counter++;
         this.time = this.time + 1;
+        counter++;
         u.finishTime = this.time;
     }
+
+    /**
+     * Takes each vertex from the given graph in the depth first search  and displays
+     * The vertex's number, the start time, finish time, parent vertex number, and color.
+     * @return the string representation of each vertex in the DFS Graph
+     */
     @Override
     public String toString() {
         String answer = "";
@@ -122,6 +173,11 @@ public class DepthFirstSearch {
     }
 
     public static void main(String[] args) {
+        /**
+         *  This graph is the same graphical representation as the example
+         *  found in page 605 of CLRS.
+         *  The results of the code match the results of the example from the book.
+         */
         Graph g = new Graph(6);
         g.addEdge(0,1);
         g.addEdge(0,2);
@@ -137,6 +193,11 @@ public class DepthFirstSearch {
         System.out.println( g.toString());
         System.out.println("It had " + g.numberOfVertices() + " vertices and "
                 + g.numberOfEdges() + " edges.");
+
+        /**
+         * printing the results of the dfs on the example graph.
+         */
         System.out.println(d.toString());
+        System.out.println(d.counter);
     }
 }
