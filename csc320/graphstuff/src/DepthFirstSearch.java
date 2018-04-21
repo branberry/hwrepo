@@ -106,6 +106,7 @@ public class DepthFirstSearch {
         this.time = 0;
 
         for(int i = 0; i < G.numberOfVertices(); i++) {
+            counter++;
             if (this.vertices[i].color == Color.WHITE) {
                 counter++;
                 DFSVisit(G,this.vertices[i]);
@@ -208,13 +209,23 @@ public class DepthFirstSearch {
 
         /** Contains the graphs ranging in size from 100 to 1000 vertices*/
         Graph[] graphs = new Graph[10];
-        int multiplier = 100;
 
+        /** A DFS object for every graph */
+        DepthFirstSearch[] dfs = new DepthFirstSearch[10];
+        int multiplier = 100;
+        
+        /**
+         * initalizing each graph individual graph with a
+         * edge probability of .6
+         */
         for(int i = 0; i < graphs.length; i++) {
-           graphs[i] = new Graph(multiplier,0.6);
-            System.out.println(multiplier);
+            graphs[i] = new Graph(multiplier,0.6);
+            dfs[i] = new DepthFirstSearch(graphs[i].numberOfVertices());
+            dfs[i].DFS(graphs[i]);
+            System.out.println("Counter: " + dfs[i].counter + " number of vertices " + graphs[i].numberOfVertices() + " Number of edges: " + graphs[i].numberOfEdges());
+            System.out.println();
             multiplier += 100;
 
-        }
+        }       
     }
 }
